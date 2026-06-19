@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>গ্রামীণ লোন</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1600')
+    center center/cover no-repeat fixed;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.overlay{
+    width:100%;
+    max-width:700px;
+}
+
+.form-box{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(12px);
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.3);
+    color:#fff;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.logo h1{
+    font-size:38px;
+    color:#fff;
+    text-shadow:2px 2px 5px #000;
+}
+
+.logo p{
+    margin-top:5px;
+    color:#f1f1f1;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+input, select{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    outline:none;
+    font-size:15px;
+}
+
+input[type="file"]{
+    background:#fff;
+}
+
+button{
+    width:100%;
+    margin-top:25px;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#16a34a;
+    color:#fff;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+.loading-box{
+    display:none;
+    margin-top:20px;
+}
+
+.progress{
+    width:100%;
+    height:25px;
+    background:#ddd;
+    border-radius:50px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#16a34a,#22c55e);
+    transition:.1s;
+}
+
+.percent{
+    text-align:center;
+    margin-top:10px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.success{
+    display:none;
+    text-align:center;
+    margin-top:20px;
+}
+
+.tick{
+    font-size:70px;
+    color:#22c55e;
+}
+
+.success h2{
+    margin-top:10px;
+    color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay">
+
+<div class="form-box">
+
+<div class="logo">
+<h1>🌾 গ্রামীণ লোন</h1>
+<p>ডেমো আবেদন ফর্ম</p>
+</div>
+
+<form id="loanForm">
+
+<label>নাম</label>
+<input type="text" required>
+
+<label>পিতার নাম</label>
+<input type="text" required>
+
+<label>মাতার নাম</label>
+<input type="text" required>
+
+<label>ফোন নম্বর</label>
+<input type="tel" required>
+
+<label>ইমেইল</label>
+<input type="email">
+
+<label>পেশা</label>
+<input type="text" required>
+
+<label>লোনের পরিমাণ নির্বাচন করুন</label>
+<select required>
+<option value="">নির্বাচন করুন</option>
+<option>৫,০০০ টাকা</option>
+<option>১০,০০০ টাকা</option>
+<option>২০,০০০ টাকা</option>
+<option>৫০,০০০ টাকা</option>
+<option>১,০০,০০০ টাকা</option>
+<option>১,৫০,০০০ টাকা</option>
+<option>২,০০,০০০ টাকা</option>
+</select>
+
+<label>NID কার্ডের সামনের ছবি</label>
+<input type="file" accept="image/*" required>
+
+<label>NID কার্ডের পিছনের ছবি</label>
+<input type="file" accept="image/*" required>
+
+<button type="submit">আবেদন জমা দিন</button>
+
+</form>
+
+<div class="loading-box" id="loadingBox">
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="percent" id="percent">0%</div>
+
+</div>
+
+<div class="success" id="success">
+
+<div class="tick">✓</div>
+
+<h2>Successfully Submitted</h2>
+<p>আপনার আবেদন সফলভাবে জমা হয়েছে।</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const form = document.getElementById("loanForm");
+
+form.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+document.getElementById("loadingBox").style.display="block";
+
+let progress = 0;
+
+let bar = document.getElementById("progressBar");
+let percent = document.getElementById("percent");
+
+let interval = setInterval(()=>{
+
+progress++;
+
+bar.style.width = progress + "%";
+percent.innerHTML = progress + "%";
+
+if(progress >= 100){
+
+clearInterval(interval);
+
+document.getElementById("loadingBox").style.display="none";
+
+document.getElementById("success").style.display="block";
+
+form.reset();
+
+}
+
+},40);
+
+});
+
+</script>
+
+</body>
+</html>
